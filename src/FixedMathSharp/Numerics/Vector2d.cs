@@ -1,5 +1,4 @@
-﻿using MessagePack;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
@@ -21,7 +20,6 @@ namespace FixedMathSharp
     /// - Useful for fixed-point math scenarios where floating-point precision is insufficient or not desired.
     /// </remarks>
     [Serializable]
-    [MessagePackObject]
     public partial struct Vector2d : IEquatable<Vector2d>, IComparable<Vector2d>, IEqualityComparer<Vector2d>
     {
         #region Fields and Constants
@@ -29,13 +27,11 @@ namespace FixedMathSharp
         /// <summary>
         /// The X component of the vector.
         /// </summary>
-        [Key(0)]
         public Fixed64 x;
 
         /// <summary>
         /// The Y component of the vector.
         /// </summary>
-        [Key(1)]
         public Fixed64 y;
 
         /// <summary>
@@ -105,7 +101,6 @@ namespace FixedMathSharp
         /// <summary>
         /// Rotates the vector to the right (90 degrees clockwise).
         /// </summary>
-        [IgnoreMember]
         public Vector2d RotatedRight
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -115,7 +110,6 @@ namespace FixedMathSharp
         /// <summary>
         /// Rotates the vector to the left (90 degrees counterclockwise).
         /// </summary>
-        [IgnoreMember]
         public Vector2d RotatedLeft
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -125,7 +119,6 @@ namespace FixedMathSharp
         /// <summary>
         /// Gets the right-hand (counter-clockwise) normal vector.
         /// </summary>
-        [IgnoreMember]
         public Vector2d RightHandNormal
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -135,7 +128,6 @@ namespace FixedMathSharp
         /// <summary>
         /// Gets the left-hand (clockwise) normal vector.
         /// </summary>
-        [IgnoreMember]
         public Vector2d LeftHandNormal
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -143,7 +135,6 @@ namespace FixedMathSharp
         }
 
         /// <inheritdoc cref="GetNormalized(Vector2d)"/>
-        [IgnoreMember]
         public Vector2d Normal
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -153,7 +144,6 @@ namespace FixedMathSharp
         /// <summary>
         /// Returns the actual length of this vector (RO).
         /// </summary>
-        [IgnoreMember]
         public Fixed64 Magnitude
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -163,7 +153,6 @@ namespace FixedMathSharp
         /// <summary>
         /// Returns the square magnitude of the vector (avoids calculating the square root).
         /// </summary>
-        [IgnoreMember]
         public Fixed64 SqrMagnitude
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -173,7 +162,6 @@ namespace FixedMathSharp
         /// <summary>
         /// Returns a long hash of the vector based on its x and y values.
         /// </summary>
-        [IgnoreMember]
         public long LongStateHash
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -183,14 +171,12 @@ namespace FixedMathSharp
         /// <summary>
         /// Returns a hash of the vector based on its state.
         /// </summary>
-        [IgnoreMember]
         public int StateHash
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => (int)(LongStateHash % int.MaxValue);
         }
 
-        [IgnoreMember]
         public Fixed64 this[int index]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]

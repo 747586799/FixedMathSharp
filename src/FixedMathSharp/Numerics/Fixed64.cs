@@ -1,5 +1,4 @@
-﻿using MessagePack;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -13,7 +12,6 @@ namespace FixedMathSharp
     /// The precision is determined by SHIFT_AMOUNT, which defines the resolution of fractional values.
     /// </summary>
     [Serializable]
-    [MessagePackObject]
     public partial struct Fixed64 : IEquatable<Fixed64>, IComparable<Fixed64>, IEqualityComparer<Fixed64>
     {
         #region Fields and Constants
@@ -21,7 +19,6 @@ namespace FixedMathSharp
         /// <summary>
         /// The underlying raw long value representing the fixed-point number.
         /// </summary>
-        [Key(0)]
         public long m_rawValue;
 
         public static readonly Fixed64 MAX_VALUE = new Fixed64(FixedMath.MAX_VALUE_L);
@@ -70,7 +67,7 @@ namespace FixedMathSharp
 
         #endregion
 
-        #region Methods (Instance)
+        #region Properties and Methods (Instance)
 
         /// <summary>
         /// Offsets the current Fixed64 by an integer value.
@@ -730,7 +727,7 @@ namespace FixedMathSharp
         /// Determines whether this instance equals another object.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override bool Equals(object? obj)
+        public override bool Equals(object obj)
         {
             return obj is Fixed64 other && Equals(other);
         }

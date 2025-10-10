@@ -20,7 +20,6 @@ Ideal for simulations, games, and physics engines requiring reliable arithmetic 
 - **Bounding Shapes:** Includes `IBound` structs `BoundingBox`, `BoundingSphere`, and `BoundingArea` for lightweight spatial calculations.
 - **Advanced Math Functions:** Includes trigonometry and common math utilities.
 - **Framework Agnostic:** Works with **.NET, Unity, and other game engines**.
-- **Full Serialization Support:** Out-of-the-box round-trip serialization via BinaryFormatter (for .NET Framework 4.8+), System.Text.Json (for .NET 8+), and MessagePack across all serializable structs.
 
 ---
 
@@ -106,34 +105,6 @@ Fixed64 sinValue = FixedTrigonometry.Sin(angle);
 Console.WriteLine(sinValue); // Output: ~0.707
 ```
 
-### Deterministic Random Generation
-
-Use `DeterministicRandom` when you need reproducible random values across runs, worlds, or features.  
-Streams are derived from a seed and remain deterministic regardless of threading or platform.
-
-```csharp
-// Simple constructor-based stream:
-var rng = new DeterministicRandom(42UL);
-
-// Deterministic integer:
-int value = rng.Next(1, 10); // [1,10)
-
-// Deterministic Fixed64 in [0,1):
-Fixed64 ratio = rng.NextFixed6401();
-
-// One stream per “feature” that’s stable for the same worldSeed + key:
-var rngOre = DeterministicRandom.FromWorldFeature(worldSeed: 123456789UL, featureKey: 0xORE);
-var rngRivers = DeterministicRandom.FromWorldFeature(123456789UL, 0xRIV, index: 0);
-
-// Deterministic Fixed64 draws:
-Fixed64 h = rngOre.NextFixed64(Fixed64.One);                      // [0, 1)
-Fixed64 size = rngOre.NextFixed64(Fixed64.Zero, 5 * Fixed64.One); // [0, 5)
-Fixed64 posX = rngRivers.NextFixed64(-Fixed64.One, Fixed64.One);  // [-1, 1)
-
-// Deterministic integers:
-int loot = rngOre.Next(1, 5); // [1,5)
-```
-
 ---
 
 ## 📦 Library Structure
@@ -144,12 +115,15 @@ int loot = rngOre.Next(1, 5); // [1,5)
 - **`IBound` Interface:** Standard interface for bounding shapes `BoundingBox`, `BoundingArea`, and `BoundingSphere`, each offering intersection, containment, and projection logic.
 - **`FixedMath` Static Class:** Provides common math and trigonometric functions using fixed-point math.
 - **`Fixed4x4` and `Fixed3x3`:** Support matrix operations for transformations.
-- **`DeterministicRandom` Struct:** Seedable, allocation-free RNG for repeatable procedural generation.  
+- **`FixedMathSharp.Editor`:** Extensions for seamless integration with Unity, including property drawers and type conversions.
 
 ### Fixed64 Struct
 
-**Fixed64** is the core data type representing fixed-point numbers. It provides various mathematical operations, including addition, subtraction, multiplication, division, and more. 
-The struct guarantees deterministic behavior by using integer-based arithmetic with a configurable `SHIFT_AMOUNT`.
+**Fixed64** is the core data type representing fixed-point numbers. It 
+provides various mathematical operations, including addition,
+subtraction, multiplication, division, and more. The struct guarantees
+deterministic behavior by using integer-based arithmetic with a
+configurable `SHIFT_AMOUNT`.
 
 ---
 
@@ -164,12 +138,13 @@ FixedMathSharp is optimized for high-performance deterministic calculations:
 
 ## 🧪 Testing and Validation
 
-Unit tests are used extensively to validate the correctness of mathematical operations. 
-Special **fuzzy comparisons** are employed where small precision discrepancies might occur, mimicking floating-point behavior.
+Unit tests are used extensively to validate the correctness of mathematical 
+operations. Special **fuzzy comparisons** are employed where small precision 
+discrepancies might occur, mimicking floating-point behavior.
 
 To run the tests:
 ```bash
-dotnet test --configuration debug
+dotnet test --configuration Release
 ```
 
 ---
@@ -183,13 +158,10 @@ dotnet test --configuration debug
 
 ---
 
-## 🤝 Contributing
-
-We welcome contributions! Please see our [CONTRIBUTING](https://github.com/mrdav30/FixedMathSharp/blob/main/CONTRIBUTING.md) guide for details on how to propose changes, report issues, and interact with the community.
-
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/mrdav30/FixedMathSharp/blob/main/LICENSE.md) for details.
+This project is licensed under the MIT License - see the `LICENSE` file
+for details.
 
 ---
 

@@ -1,5 +1,4 @@
-﻿using MessagePack;
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 
 namespace FixedMathSharp
@@ -18,7 +17,6 @@ namespace FixedMathSharp
     /// </remarks>
 
     [Serializable]
-    [MessagePackObject]
     public struct BoundingArea : IBound, IEquatable<BoundingArea>
     {
         #region Fields
@@ -26,13 +24,11 @@ namespace FixedMathSharp
         /// <summary>
         /// One of the corner points of the bounding area.
         /// </summary>
-        [Key(0)]
         public Vector3d Corner1;
 
         /// <summary>
         /// The opposite corner point of the bounding area.
         /// </summary>
-        [Key(1)]
         public Vector3d Corner2;
 
         #endregion
@@ -68,59 +64,48 @@ namespace FixedMathSharp
         /// <summary>
         /// The minimum corner of the bounding box.
         /// </summary>
-        [IgnoreMember]
         public Vector3d Min
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => new(MinX, MinY, MinZ);
+            get => new Vector3d(MinX, MinY, MinZ);
         }
 
         /// <summary>
         /// The maximum corner of the bounding box.
         /// </summary>
-        [IgnoreMember]
         public Vector3d Max
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => new(MaxX, MaxY, MaxZ);
+            get => new Vector3d(MaxX, MaxY, MaxZ);
         }
 
-        [IgnoreMember]
         public Fixed64 MinX
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Corner1.x < Corner2.x ? Corner1.x : Corner2.x;
         }
-
-        [IgnoreMember]
         public Fixed64 MaxX
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Corner1.x > Corner2.x ? Corner1.x : Corner2.x;
         }
 
-        [IgnoreMember]
         public Fixed64 MinY
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Corner1.y < Corner2.y ? Corner1.y : Corner2.y;
         }
-
-        [IgnoreMember]
         public Fixed64 MaxY
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Corner1.y > Corner2.y ? Corner1.y : Corner2.y;
         }
 
-        [IgnoreMember]
         public Fixed64 MinZ
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Corner1.z < Corner2.z ? Corner1.z : Corner2.z;
         }
-
-        [IgnoreMember]
         public Fixed64 MaxZ
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -130,7 +115,6 @@ namespace FixedMathSharp
         /// <summary>
         /// Calculates the width (X-axis) of the bounding area.
         /// </summary>
-        [IgnoreMember]
         public Fixed64 Width
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -140,7 +124,6 @@ namespace FixedMathSharp
         /// <summary>
         /// Calculates the height (Y-axis) of the bounding area.
         /// </summary>
-        [IgnoreMember]
         public Fixed64 Height
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -150,7 +133,6 @@ namespace FixedMathSharp
         /// <summary>
         /// Calculates the depth (Z-axis) of the bounding area.
         /// </summary>
-        [IgnoreMember]
         public Fixed64 Depth
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -235,7 +217,7 @@ namespace FixedMathSharp
         #region Equality and HashCode Overrides
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override bool Equals(object? obj) => obj is BoundingArea other && Equals(other);
+        public override bool Equals(object obj) => obj is BoundingArea other && Equals(other);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(BoundingArea other) => Corner1.Equals(other.Corner1) && Corner2.Equals(other.Corner2);

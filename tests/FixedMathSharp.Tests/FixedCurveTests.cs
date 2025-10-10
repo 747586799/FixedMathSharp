@@ -1,9 +1,8 @@
-﻿using MessagePack;
-
-#if NET48_OR_GREATER
+﻿#if NET48_OR_GREATER
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
+
 #endif
 
 #if NET8_0_OR_GREATER
@@ -132,10 +131,8 @@ namespace FixedMathSharp.Tests
             Assert.Equal((Fixed64)(10000), curve.Evaluate(Fixed64.MAX_VALUE));
         }
 
-        #region Test: Serialization
-
         [Fact]
-        public void FixedCurve_NetSerialization_RoundTripMaintainsData()
+        public void FixedCurve_Serialization_RoundTripMaintainsData()
         {
             var originalCurve = new FixedCurve(
                 new FixedCurveKey(-10, -100),
@@ -168,22 +165,5 @@ namespace FixedMathSharp.Tests
             // Check that deserialized values match the original
             Assert.Equal(originalCurve, deserializedCurve);
         }
-
-        [Fact]
-        public void FixedCurve_MsgPackSerialization_RoundTripMaintainsData()
-        {
-            FixedCurve originalValue = new FixedCurve(
-                new FixedCurveKey(-10, -100),
-                new FixedCurveKey(0, 0),
-                new FixedCurveKey(10, 100));
-
-            byte[] bytes = MessagePackSerializer.Serialize(originalValue);
-            FixedCurve deserializedValue = MessagePackSerializer.Deserialize<FixedCurve>(bytes);
-
-            // Check that deserialized values match the original
-            Assert.Equal(originalValue, deserializedValue);
-        }
-
-        #endregion
     }
 }

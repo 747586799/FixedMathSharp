@@ -1,6 +1,5 @@
-﻿using MessagePack;
-
-#if NET48_OR_GREATER
+﻿#if NET48_OR_GREATER
+using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 #endif
@@ -322,10 +321,8 @@ namespace FixedMathSharp.Tests
                 Fixed3x3.InverseTransformDirection(singularMatrix, direction));
         }
 
-        #region Test: Serialization
-
         [Fact]
-        public void Fixed3x3_NetSerialization_RoundTripMaintainsData()
+        public void Fixed3x3_Serialization_RoundTripMaintainsData()
         {
             var original3x3 = Fixed3x3.CreateRotationX(FixedMath.PiOver2); // 90 degrees
 
@@ -355,19 +352,5 @@ namespace FixedMathSharp.Tests
             // Check that deserialized values match the original
             Assert.Equal(original3x3, deserialized3x3);
         }
-
-        [Fact]
-        public void Fixed3x3_MsgPackSerialization_RoundTripMaintainsData()
-        {
-            Fixed3x3 originalValue = Fixed3x3.CreateRotationX(FixedMath.PiOver2); // 90 degrees
-
-            byte[] bytes = MessagePackSerializer.Serialize(originalValue);
-            Fixed3x3 deserializedValue = MessagePackSerializer.Deserialize<Fixed3x3>(bytes);
-
-            // Check that deserialized values match the original
-            Assert.Equal(originalValue, deserializedValue);
-        }
-
-        #endregion
     }
 }

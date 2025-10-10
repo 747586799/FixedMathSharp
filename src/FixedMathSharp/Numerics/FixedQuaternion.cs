@@ -1,5 +1,5 @@
-﻿using MessagePack;
-using System;
+﻿using System;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 
 namespace FixedMathSharp
@@ -9,22 +9,11 @@ namespace FixedMathSharp
     /// Quaternions are useful for representing rotations and can be used to perform smooth rotations and avoid gimbal lock.
     /// </summary>
     [Serializable]
-    [MessagePackObject]
     public struct FixedQuaternion : IEquatable<FixedQuaternion>
     {
         #region Fields and Constants
 
-        [Key(0)]
-        public Fixed64 x;
-
-        [Key(1)]
-        public Fixed64 y;
-
-        [Key(2)]
-        public Fixed64 z;
-
-        [Key(3)]
-        public Fixed64 w;
+        public Fixed64 x, y, z, w;
 
         /// <summary>
         /// Identity quaternion (0, 0, 0, 1).
@@ -59,7 +48,6 @@ namespace FixedMathSharp
         /// <summary>
         /// Normalized version of this quaternion.
         /// </summary>
-        [IgnoreMember]
         public FixedQuaternion Normal
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -69,7 +57,6 @@ namespace FixedMathSharp
         /// <summary>
         /// Returns the Euler angles (in degrees) of this quaternion.
         /// </summary>
-        [IgnoreMember]
         public Vector3d EulerAngles
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -78,7 +65,6 @@ namespace FixedMathSharp
             set => this = FromEulerAnglesInDegrees(value.x, value.y, value.z);
         }
 
-        [IgnoreMember]
         public Fixed64 this[int index]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]

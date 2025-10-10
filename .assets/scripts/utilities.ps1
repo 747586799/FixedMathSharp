@@ -1,12 +1,9 @@
 function Get-SolutionDirectory {
-    param (
-		[string]$StartPath = $(Get-Location),
-		[string]$SolutionPath = "FixedMathSharp.sln"
-	)
+    param ([string]$StartPath = $(Get-Location))
 
     $currentPath = $StartPath
     while ($true) {
-        if (Test-Path (Join-Path $currentPath $SolutionPath)) {
+        if (Test-Path (Join-Path $currentPath "FixedMathSharp.sln")) {
             return $currentPath
         }
         $parent = [System.IO.Directory]::GetParent($currentPath)
