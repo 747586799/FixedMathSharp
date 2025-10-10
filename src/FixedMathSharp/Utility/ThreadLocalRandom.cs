@@ -4,68 +4,113 @@ using System.Threading;
 namespace FixedMathSharp.Utility
 {
     /// <summary>
-    /// Deterministic per-thread RNG facade.
+    /// Provides thread-safe, deterministic random number generation for use in simulations, games, 
+    /// and physics engines. This utility ensures randomness is consistent across multiple threads, 
+    /// avoiding common pitfalls of shared Random instances and aiding reproducible calculations.
     /// </summary>
-    [Obsolete("ThreadLocalRandom is deprecated. Use DeterministicRandom or DeterministicRandom.FromWorldFeature(...) for deterministic streams.", false)]
     public static class ThreadLocalRandom
     {
-        private static ulong _rootSeed = 0;
-        private static Func<int> _threadIndexProvider = null!;
-        private static ThreadLocal<DeterministicRandom> _threadRng = null!;
+        /// <summary>
+        /// Random number generator used to generate seeds,
+        /// which are then used to create new random number
+        /// generators on a per-thread basis.
+        /// </summary>
+        private static readonly Random globalRandom = new Random(Guid.NewGuid().GetHashCode());
+        private static readonly object globalLock = new object();
 
         /// <summary>
-        /// Initialize global deterministic seeding. 
-        /// Provide a stable threadIndex (0..T-1) for each thread.
+        /// Random number generator
         /// </summary>
-        public static void Initialize(ulong rootSeed, Func<int> threadIndexProvider)
-        {
-            _rootSeed = rootSeed;
-            _threadIndexProvider = threadIndexProvider ?? throw new ArgumentNullException(nameof(threadIndexProvider));
+        private static readonly ThreadLocal<Random> threadRandom = new ThreadLocal<Random>(NewRandom);
 
-            _threadRng = new ThreadLocal<DeterministicRandom>(() =>
-            {
-                int idx = _threadIndexProvider();
-                // Derive a unique stream per thread deterministically from rootSeed + idx.
-                return DeterministicRandom.FromWorldFeature(_rootSeed, (ulong)idx);
-            });
+        /// <summary>
+        /// Creates a new instance of Random. The seed is derived
+        /// from a global (static) instance of Random, rather
+        /// than time.
+        /// </summary>
+        public static Random NewRandom()
+        {
+            lock (globalLock)
+                return new Random(globalRandom.Next());
         }
 
         /// <summary>
-        /// Create a new independent RNG from a specific seed (does not affect thread Instance).
+        /// Returns an instance of Random which can be used freely
+        /// within the current thread.
         /// </summary>
-        public static DeterministicRandom NewRandom(ulong seed) => new(seed);
+        public static Random Instance => threadRandom.Value;
 
-        /// <summary>
-        /// Per-thread RNG instance (requires Initialize to be called first).
-        /// </summary>
-        public static DeterministicRandom Instance
+        /// <summary>See <see cref="Random.Next()" /></summary>
+        public static int Next()
         {
-            get
-            {
-                if (_threadRng == null)
-                    throw new InvalidOperationException("ThreadLocalRandom.Initialize(rootSeed, threadIndexProvider) must be called first.");
-                return _threadRng.Value;
-            }
+            return Instance.Next();
         }
 
-        #region Convenience mirrors
+        /// <summary>See <see cref="Random.Next(int)" /></summary>
+        public static int Next(int maxValue)
+        {
+            return Instance.Next(maxValue);
+        }
 
-        public static int Next() => Instance.Next();
-        public static int Next(int maxExclusive) => Instance.Next(maxExclusive);
-        public static int Next(int minInclusive, int maxExclusive) => Instance.Next(minInclusive, maxExclusive);
-        public static double NextDouble() => Instance.NextDouble();
-        public static double NextDouble(double min, double max) => Instance.NextDouble() * (max - min) + min;
+        /// <summary>See <see cref="Random.Next(int, int)" /></summary>
+        public static int Next(int minValue, int maxValue)
+        {
+            return Instance.Next(minValue, maxValue);
+        }
 
+        /// <summary>
+        ///  Returns a random Fixed64 number that is less than `max`.
+        /// </summary>
+        /// <param name="max"></param>
+        public static Fixed64 NextFixed64(Fixed64 max = default)
+        {
+            if (max == Fixed64.Zero)
+                throw new ArgumentException("Max value must be greater than zero.");
+
+            byte[] buf = new byte[8];
+            Instance.NextBytes(buf);
+
+            // Use bitwise operation to ensure a non-negative long.
+            long longRand = BitConverter.ToInt64(buf, 0) & long.MaxValue;
+
+            return Fixed64.FromRaw(longRand % max.m_rawValue);
+        }
+
+        /// <summary>
+        ///  Returns a random Fixed64 number that is greater than or equal to `min`, and less than `max`.
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        public static Fixed64 NextFixed64(Fixed64 min, Fixed64 max)
+        {
+            if (min >= max)
+                throw new ArgumentException("Min value must be less than max.");
+
+            byte[] buf = new byte[8];
+            Instance.NextBytes(buf);
+
+            // Ensure non-negative random long.
+            long longRand = BitConverter.ToInt64(buf, 0) & long.MaxValue;
+
+            return Fixed64.FromRaw(longRand % (max.m_rawValue - min.m_rawValue)) + min;
+        }
+
+        /// <summary>See <see cref="Random.NextDouble()" /></summary>
+        public static double NextDouble()
+        {
+            return Instance.NextDouble();
+        }
+
+        /// <summary>See <see cref="Random.NextDouble()" /></summary>
+        public static double NextDouble(double min, double max)
+        {
+            return Instance.NextDouble() * (max - min) + min;
+        }
+
+        /// <summary>See <see cref="Random.NextBytes(byte[])" /></summary>
         public static void NextBytes(byte[] buffer)
         {
-            if (buffer == null) throw new ArgumentNullException(nameof(buffer));
             Instance.NextBytes(buffer);
         }
-
-        public static Fixed64 NextFixed6401() => Instance.NextFixed6401();
-        public static Fixed64 NextFixed64(Fixed64 maxExclusive) => Instance.NextFixed64(maxExclusive);
-        public static Fixed64 NextFixed64(Fixed64 minInclusive, Fixed64 maxExclusive) => Instance.NextFixed64(minInclusive, maxExclusive);
-
-        #endregion
     }
 }
