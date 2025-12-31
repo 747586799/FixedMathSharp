@@ -248,7 +248,7 @@ namespace FixedMathSharp
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Fixed64 operator +(Fixed64 x, int y)
         {
-            return new Fixed64((x.m_rawValue * FixedMath.SCALE_FACTOR_D) + y);
+            return new Fixed64(x.m_rawValue + ((long)y << FixedMath.SHIFT_AMOUNT_I));
         }
 
         /// <summary>
@@ -256,22 +256,6 @@ namespace FixedMathSharp
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Fixed64 operator +(int x, Fixed64 y)
-        {
-            return y + x;
-        }
-
-        /// <summary>
-        /// Adds a float to x 
-        /// </summary>
-        public static Fixed64 operator +(Fixed64 x, float y)
-        {
-            return new Fixed64((x.m_rawValue * FixedMath.SCALE_FACTOR_D) + y);
-        }
-
-        /// <summary>
-        /// Adds a Fixed64 to x 
-        /// </summary>
-        public static Fixed64 operator +(float x, Fixed64 y)
         {
             return y + x;
         }
@@ -296,7 +280,7 @@ namespace FixedMathSharp
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Fixed64 operator -(Fixed64 x, int y)
         {
-            return new Fixed64((x.m_rawValue * FixedMath.SCALE_FACTOR_D) - y);
+            return new Fixed64(x.m_rawValue - ((long)y << FixedMath.SHIFT_AMOUNT_I));
         }
 
         /// <summary>
@@ -305,27 +289,9 @@ namespace FixedMathSharp
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Fixed64 operator -(int x, Fixed64 y)
         {
-            return new Fixed64(x - (y.m_rawValue * FixedMath.SCALE_FACTOR_D));
+            return new Fixed64(((long)x << FixedMath.SHIFT_AMOUNT_I) - y.m_rawValue );
         }
-
-        /// <summary>
-        /// Subtracts a float from x 
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Fixed64 operator -(Fixed64 x, float y)
-        {
-            return new Fixed64((x.m_rawValue * FixedMath.SCALE_FACTOR_D) - y);
-        }
-
-        /// <summary>
-        /// Subtracts a Fixed64 from x 
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Fixed64 operator -(float x, Fixed64 y)
-        {
-            return new Fixed64(x - (y.m_rawValue * FixedMath.SCALE_FACTOR_D));
-        }
-
+        
         /// <summary>
         /// Multiplies two Fixed64 numbers, handling overflow and rounding.
         /// </summary>
@@ -398,7 +364,7 @@ namespace FixedMathSharp
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Fixed64 operator *(Fixed64 x, int y)
         {
-            return new Fixed64((x.m_rawValue * FixedMath.SCALE_FACTOR_D) * y);
+            return new Fixed64(x.m_rawValue * y);
         }
 
         /// <summary>
@@ -470,7 +436,7 @@ namespace FixedMathSharp
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Fixed64 operator /(Fixed64 x, int y)
         {
-            return new Fixed64((x.m_rawValue * FixedMath.SCALE_FACTOR_D) / y);
+            return new Fixed64(x.m_rawValue/ y);
         }
 
         /// <summary>

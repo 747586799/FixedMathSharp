@@ -9,7 +9,14 @@
   <component name="ChangeListManager">
     <list default="true" id="a8a7c6c7-397c-498d-b0a3-065955e45447" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FixedMathSharp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FixedMathSharp/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FixedMathSharp.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/FixedMathSharp.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Publish/FixedMathSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Publish/FixedMathSharp.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Publish/FixedMathSharp.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Publish/FixedMathSharp.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Publish/FixedMathSharp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Publish/FixedMathSharp.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FixedMathSharp/Core/PropertyFixedMath.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/FixedMathSharp/Core/PropertyFixedMath.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FixedMathSharp/Numerics/Fixed64.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/FixedMathSharp/Numerics/Fixed64.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FixedMathSharp/Numerics/PropertyFixed64.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/FixedMathSharp/Numerics/PropertyFixed64.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FixedMathSharp/Numerics/Vector2d.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/FixedMathSharp/Numerics/Vector2d.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FixedMathSharp/Numerics/Vector3d.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/FixedMathSharp/Numerics/Vector3d.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,6 +111,10 @@
       <updated>1761893503940</updated>
       <workItem from="1761893505007" duration="6991000" />
       <workItem from="1762149933935" duration="659000" />
+      <workItem from="1763108172025" duration="635000" />
+      <workItem from="1766714800324" duration="655000" />
+      <workItem from="1767145897053" duration="162000" />
+      <workItem from="1767146070104" duration="4837000" />
     </task>
     <servers />
   </component>
@@ -131,5 +142,13 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>

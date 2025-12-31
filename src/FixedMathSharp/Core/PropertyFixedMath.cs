@@ -46,7 +46,7 @@ namespace FixedMathSharp
         ///      0 - Epsilon = -Epsilon
         ///  A value Between any number and Epsilon will result in an arbitrary number due to truncating errors.
         /// </remarks>
-        public const long EPSILON_L = 1L << (SHIFT_AMOUNT_I - 20); //~1E-06f
+        public const long EPSILON_L = 1L; //~1E-06f
 
         #endregion
 

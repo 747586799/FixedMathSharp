@@ -256,7 +256,7 @@ namespace FixedMathSharp
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PropertyFixed64 operator +(PropertyFixed64 x, int y)
         {
-            return new PropertyFixed64((x.m_rawValue * PropertyFixedMath.SCALE_FACTOR_D) + y);
+            return new PropertyFixed64(x.m_rawValue + ((long)y << PropertyFixedMath.SHIFT_AMOUNT_I));
         }
 
         /// <summary>
@@ -264,22 +264,6 @@ namespace FixedMathSharp
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PropertyFixed64 operator +(int x, PropertyFixed64 y)
-        {
-            return y + x;
-        }
-
-        /// <summary>
-        /// Adds a float to x 
-        /// </summary>
-        public static PropertyFixed64 operator +(PropertyFixed64 x, float y)
-        {
-            return new PropertyFixed64((x.m_rawValue * PropertyFixedMath.SCALE_FACTOR_D) + y);
-        }
-
-        /// <summary>
-        /// Adds a PropertyFixed64 to x 
-        /// </summary>
-        public static PropertyFixed64 operator +(float x, PropertyFixed64 y)
         {
             return y + x;
         }
@@ -304,7 +288,7 @@ namespace FixedMathSharp
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PropertyFixed64 operator -(PropertyFixed64 x, int y)
         {
-            return new PropertyFixed64((x.m_rawValue * PropertyFixedMath.SCALE_FACTOR_D) - y);
+            return new PropertyFixed64(x.m_rawValue - ((long)y << PropertyFixedMath.SHIFT_AMOUNT_I));
         }
 
         /// <summary>
@@ -313,25 +297,7 @@ namespace FixedMathSharp
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PropertyFixed64 operator -(int x, PropertyFixed64 y)
         {
-            return new PropertyFixed64(x - (y.m_rawValue * PropertyFixedMath.SCALE_FACTOR_D));
-        }
-
-        /// <summary>
-        /// Subtracts a float from x 
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PropertyFixed64 operator -(PropertyFixed64 x, float y)
-        {
-            return new PropertyFixed64((x.m_rawValue * PropertyFixedMath.SCALE_FACTOR_D) - y);
-        }
-
-        /// <summary>
-        /// Subtracts a PropertyFixed64 from x 
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PropertyFixed64 operator -(float x, PropertyFixed64 y)
-        {
-            return new PropertyFixed64(x - (y.m_rawValue * PropertyFixedMath.SCALE_FACTOR_D));
+            return new PropertyFixed64(((long)x << PropertyFixedMath.SHIFT_AMOUNT_I) - y.m_rawValue);
         }
 
         /// <summary>
@@ -383,7 +349,7 @@ namespace FixedMathSharp
             }
 
             // Final overflow check: if the high 32 bits are non-zero or non-sign-extended, it's an overflow
-            long topCarry = hihi >> PropertyFixedMath.SHIFT_AMOUNT_I;
+            long topCarry = hihi >> PropertyFixedMath.NUM_BITS - PropertyFixedMath.SHIFT_AMOUNT_I;
             if (topCarry != 0 && topCarry != -1)
                 return opSignsEqual ? MAX_VALUE : MIN_VALUE;
 
@@ -406,7 +372,7 @@ namespace FixedMathSharp
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PropertyFixed64 operator *(PropertyFixed64 x, int y)
         {
-            return new PropertyFixed64((x.m_rawValue * PropertyFixedMath.SCALE_FACTOR_D) * y);
+            return new PropertyFixed64(x.m_rawValue * y);
         }
 
         /// <summary>
@@ -478,7 +444,7 @@ namespace FixedMathSharp
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PropertyFixed64 operator /(PropertyFixed64 x, int y)
         {
-            return new PropertyFixed64((x.m_rawValue * PropertyFixedMath.SCALE_FACTOR_D) / y);
+            return new PropertyFixed64(x.m_rawValue / y);
         }
 
         /// <summary>

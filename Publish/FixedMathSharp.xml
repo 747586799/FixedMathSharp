@@ -1956,16 +1956,6 @@
             Adds an Fixed64 to x 
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Fixed64.op_Addition(FixedMathSharp.Fixed64,System.Single)">
-            <summary>
-            Adds a float to x 
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Fixed64.op_Addition(System.Single,FixedMathSharp.Fixed64)">
-            <summary>
-            Adds a Fixed64 to x 
-            </summary>
-        </member>
         <member name="M:FixedMathSharp.Fixed64.op_Subtraction(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
             Subtracts one Fixed64 number from another, with saturating behavior in case of overflow.
@@ -1977,16 +1967,6 @@
             </summary>
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Subtraction(System.Int32,FixedMathSharp.Fixed64)">
-            <summary>
-            Subtracts a Fixed64 from x 
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Fixed64.op_Subtraction(FixedMathSharp.Fixed64,System.Single)">
-            <summary>
-            Subtracts a float from x 
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Fixed64.op_Subtraction(System.Single,FixedMathSharp.Fixed64)">
             <summary>
             Subtracts a Fixed64 from x 
             </summary>
@@ -2675,16 +2655,6 @@
             Adds an PropertyFixed64 to x 
             </summary>
         </member>
-        <member name="M:FixedMathSharp.PropertyFixed64.op_Addition(FixedMathSharp.PropertyFixed64,System.Single)">
-            <summary>
-            Adds a float to x 
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.PropertyFixed64.op_Addition(System.Single,FixedMathSharp.PropertyFixed64)">
-            <summary>
-            Adds a PropertyFixed64 to x 
-            </summary>
-        </member>
         <member name="M:FixedMathSharp.PropertyFixed64.op_Subtraction(FixedMathSharp.PropertyFixed64,FixedMathSharp.PropertyFixed64)">
             <summary>
             Subtracts one PropertyFixed64 number from another, with saturating behavior in case of overflow.
@@ -2696,16 +2666,6 @@
             </summary>
         </member>
         <member name="M:FixedMathSharp.PropertyFixed64.op_Subtraction(System.Int32,FixedMathSharp.PropertyFixed64)">
-            <summary>
-            Subtracts a PropertyFixed64 from x 
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.PropertyFixed64.op_Subtraction(FixedMathSharp.PropertyFixed64,System.Single)">
-            <summary>
-            Subtracts a float from x 
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.PropertyFixed64.op_Subtraction(System.Single,FixedMathSharp.PropertyFixed64)">
             <summary>
             Subtracts a PropertyFixed64 from x 
             </summary>
