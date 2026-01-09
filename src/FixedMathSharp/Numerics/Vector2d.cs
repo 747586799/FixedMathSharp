@@ -310,6 +310,15 @@ namespace FixedMathSharp
             y *= scale.y;
             return this;
         }
+        
+        /// <summary>
+        /// returning a unit vector with this direction.
+        /// </summary>
+        /// <returns></returns>
+        public Vector2d GetNormalize()
+        {
+            return GetNormalized(this);
+        }
 
         /// <summary>
         /// Normalizes this vector in place, making its magnitude (length) equal to 1, and returns the modified vector.

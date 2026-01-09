@@ -3005,6 +3005,12 @@
             </summary>
             <param name="scale">The vector containing the scale factors for each component.</param>
         </member>
+        <member name="M:FixedMathSharp.Vector2d.GetNormalize">
+            <summary>
+            returning a unit vector with this direction.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:FixedMathSharp.Vector2d.Normalize">
             <summary>
             Normalizes this vector in place, making its magnitude (length) equal to 1, and returns the modified vector.

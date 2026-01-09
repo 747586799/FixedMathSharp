@@ -143,6 +143,15 @@ namespace FixedMathSharp.Tests
             var result = FixedMath.Round(new Fixed64(2.5));
             Assert.Equal(new Fixed64(2), result);
         }
+        
+        [Fact]
+        public void Round_ToIntEven_RoundsToNearestEven()
+        {
+            var result = new Fixed64(2.55).RoundToInt();
+            Assert.Equal(3, result);
+            result = new PropertyFixed64(2.55).RoundToInt();
+            Assert.Equal(3, result);
+        }
 
         [Fact]
         public void Round_AwayFromZero_RoundsUp()
@@ -156,6 +165,10 @@ namespace FixedMathSharp.Tests
         {
             var result = FixedMath.Round(new Fixed64(-2.5));
             Assert.Equal(new Fixed64(-2), result);
+            result = FixedMath.Round(new Fixed64(-1.5));
+            Assert.Equal(new Fixed64(-2), result);
+            var result1 = PropertyFixedMath.Round(new PropertyFixed64(-1.5));
+            Assert.Equal(new PropertyFixed64(-2), result1);
         }
 
         #endregion

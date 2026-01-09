@@ -139,7 +139,7 @@ namespace FixedMathSharp
         public static PropertyFixed64 Floor(PropertyFixed64 value)
         {
             // Efficiently zeroes out the fractional part
-            return PropertyFixed64.FromRaw((long)((ulong)value.m_rawValue & FixedMath.MASK_UL));
+            return PropertyFixed64.FromRaw((long)((ulong)value.m_rawValue & PropertyFixedMath.MASK_UL));
         }
 
         /// <summary>
